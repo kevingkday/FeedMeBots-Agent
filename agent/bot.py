@@ -1,6 +1,9 @@
 import time
 from typing import Any, Dict
-from rich import print
+try:
+    from rich import print
+except ImportError:
+    pass
 from agent.config import BOT_NAME, OLLAMA_MODEL
 from agent.llm import query_ollama
 from agent.validator import validate_and_sanitize, get_safe_fallback

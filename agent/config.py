@@ -1,7 +1,9 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 PORT = int(os.getenv("PORT", "8000"))
 HOST = os.getenv("HOST", "0.0.0.0")

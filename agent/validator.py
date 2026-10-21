@@ -1,5 +1,8 @@
 from typing import Any, Dict, List, Optional
-from rich import print
+try:
+    from rich import print
+except ImportError:
+    pass
 
 def get_safe_fallback(state: Dict[str, Any], reason: str = "") -> Dict[str, Any]:
     """

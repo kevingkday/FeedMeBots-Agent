@@ -33,7 +33,7 @@ def run_mock_tests():
     print("\n[Test 1] Premium Pre-Flop [Ah, Kd] - Decision:")
     res1 = decide(mock_preflop)
     assert res1["action"] in ["fold", "call", "raise"], f"Invalid action: {res1}"
-    print(f"✅ Result: {res1}")
+    print(f"[OK] Result: {res1}")
 
     # Test Case 2: Flop Check or Bet Opportunity
     mock_flop = {
@@ -61,7 +61,7 @@ def run_mock_tests():
     print("\n[Test 2] Flop Top Set [Kh, Ks] with check available:")
     res2 = decide(mock_flop)
     assert res2["action"] in ["check", "raise"], f"Invalid action: {res2}"
-    print(f"✅ Result: {res2}")
+    print(f"[OK] Result: {res2}")
 
     # Test Case 3: Facing All-in with Weak Hand (Testing Fold/Call)
     mock_river_facing_shove = {
@@ -89,9 +89,9 @@ def run_mock_tests():
     print("\n[Test 3] River Facing Shove with Trash [7h, 2d]:")
     res3 = decide(mock_river_facing_shove)
     assert res3["action"] in ["fold", "call"], f"Invalid action: {res3}"
-    print(f"✅ Result: {res3}")
+    print(f"[OK] Result: {res3}")
 
-    print("\n🎉 All 3 self-test scenarios completed successfully!")
+    print("\n[SUCCESS] All 3 self-test scenarios completed successfully!")
 
 if __name__ == "__main__":
     run_mock_tests()

@@ -1,9 +1,13 @@
 import json
+import re
 import time
 from typing import Any, Dict, Optional
 import requests
 from agent.config import OLLAMA_BASE_URL, OLLAMA_MODEL, DECISION_TIMEOUT_MS
 from agent.prompt import SYSTEM_PROMPT, build_prompt
+
+# Persistent HTTP session with connection pooling for sub-150ms inference calls
+_session = requests.Session()
 
 def query_ollama(state: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -19,9 +23,10 @@ def query_ollama(state: Dict[str, Any]) -> Dict[str, Any]:
         ],
         "stream": False,
         "format": "json",
+        "think": False,
         "options": {
-            "temperature": 0.2,
-            "num_predict": 40
+            "temperature": 0.1,
+            "num_predict": 30
         }
     }
 
@@ -29,14 +34,21 @@ def query_ollama(state: Dict[str, Any]) -> Dict[str, Any]:
     timeout_sec = DECISION_TIMEOUT_MS / 1000.0
 
     t0 = time.perf_counter()
-    resp = requests.post(url, json=payload, timeout=timeout_sec)
+    resp = _session.post(url, json=payload, timeout=timeout_sec)
     dt_ms = (time.perf_counter() - t0) * 1000.0
 
     if resp.status_code != 200:
         raise RuntimeError(f"Ollama returned HTTP {resp.status_code}: {resp.text}")
 
     data = resp.json()
-    content = data.get("message", {}).get("content", "{}")
+    content = data.get("message", {}).get("content", "").strip()
+
+    # In case model wraps in markdown json blocks ```json ... ```
+    if content.startswith("```"):
+        match = re.search(r"\{.*\}", content, re.DOTALL)
+        if match:
+            content = match.group(0)
+
     parsed = json.loads(content)
 
     return {
