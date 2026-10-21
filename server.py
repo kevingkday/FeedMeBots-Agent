@@ -30,6 +30,6 @@ def handle_action(state: Dict[str, Any]):
     return decide(state)
 
 if __name__ == "__main__":
-    print(f"🚀 Starting {BOT_NAME} on http://{HOST}:{PORT}")
-    print(f"🧠 Local Model Target: {OLLAMA_MODEL}")
+    print(f"[*] Starting {BOT_NAME} on http://{HOST}:{PORT}")
+    print(f"[*] Local Model Target: {OLLAMA_MODEL}")
     uvicorn.run("server:app", host=HOST, port=PORT, reload=False)

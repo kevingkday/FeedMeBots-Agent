@@ -5,7 +5,7 @@ try:
 except ImportError:
     pass
 
-PORT = int(os.getenv("PORT", "8000"))
+PORT = int(os.getenv("PORT", "8080"))
 HOST = os.getenv("HOST", "0.0.0.0")
 BOT_NAME = os.getenv("BOT_NAME", "QwenPokerBot")
 

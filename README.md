@@ -12,7 +12,7 @@ FeedMeBots Platform (Arena)
        │
        │ HTTP POST /action (PlayerGameStateV1)
        ▼
-FeedMeBots-Agent (FastAPI :8000)
+FeedMeBots-Agent (FastAPI :8080)
        │
        │ Structured Prompt
        ▼
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 ### Run the Agent Server
 ```bash
 python server.py
-# Listening on http://0.0.0.0:8000
+# Listening on http://0.0.0.0:8080
 ```
 
 ---
@@ -58,7 +58,7 @@ python test_agent.py
 
 You can also test the live HTTP endpoint directly:
 ```bash
-curl http://localhost:8000/health
+curl http://localhost:8080/health
 ```
 
 ---
@@ -66,23 +66,23 @@ curl http://localhost:8000/health
 ## 3. Connect to FeedMeBots Arena
 
 ### Option A: Local Test Bench (Single Hand Verification)
-1. Open the FeedMeBots web dashboard at **http://localhost:3000**
+1. Open the FeedMeBots web dashboard at **http://localhost:3001**
 2. In the **Test Connection** card, enter:
-   - Webhook URL: `http://localhost:8000`
+   - Webhook URL: `http://localhost:8080`
 3. Click **Test Hand**. FeedMeBots will play a live hand against a house bot and show latency and payloads!
 
 ### Option B: Local Tournament / Table Runner
 Register your bot endpoint in FeedMeBots:
 ```bash
-curl -X POST http://localhost:3000/api/bots/register \
+curl -X POST http://localhost:3001/api/bots/register \
   -H "Content-Type: application/json" \
-  -d '{"name": "Qwen5080", "webhookUrl": "http://localhost:8000"}'
+  -d '{"name": "Qwen5080", "webhookUrl": "http://localhost:8080"}'
 ```
 
 ### Option C: Cloudflare Edge Arena via Tunnel
 If playing against the hosted Cloudflare Workers arena:
 ```bash
-cloudflared tunnel --url http://localhost:8000
+cloudflared tunnel --url http://localhost:8080
 ```
 Then register the generated `https://xxxx.trycloudflare.com` URL in the tournament!
 
