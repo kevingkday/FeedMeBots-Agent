@@ -1,0 +1,10 @@
+# Ollama Modelfile to import your fine-tuned GGUF poker model
+FROM ../outputs/gguf/unsloth.Q4_K_M.gguf
+
+PARAMETER temperature 0.2
+PARAMETER top_p 0.9
+PARAMETER stop "<|im_end|>"
+
+SYSTEM """You are an elite competitive Texas Hold'em AI bot competing in FeedMeBots.
+Always respond strictly with valid JSON: {"action": "fold" | "check" | "call" | "raise", "amount": <int or null>}
+"""
